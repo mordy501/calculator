@@ -1,0 +1,245 @@
+<style>
+    /* تصميم حديث مع التعديلات الجديدة */
+    .calculator-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      font-family: 'Segoe UI', sans-serif;
+    }
+    
+    .sar-symbol {
+      height: 22px;
+      width: auto;
+      vertical-align: middle;
+      margin: 0 3px;
+    }
+    
+    .company-option.active {
+      border-color: #1ABC9C !important;
+      background: rgba(228, 248, 238, 0.3) !important;
+    }
+    
+    .company-logo {
+      height: 80px;
+      width: auto;
+      margin-bottom: 15px;
+      object-fit: contain;
+    }
+    
+    .calculate-btn {
+      background: linear-gradient(45deg, #1ABC9C, #148F77);
+    }
+    
+    .result-item[style*="background"] {
+      background: #e4f8ee !important;
+    }
+    
+    .input-field:focus {
+      border-color: #1ABC9C;
+      box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.25);
+    }
+    
+    /* باقي الأنماط */
+    .calculator-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .calculator-header h2 {
+      color: #2d3436;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .input-group {
+      margin-bottom: 1.2rem;
+    }
+    
+    .input-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #495057;
+      font-weight: 500;
+    }
+    
+    .input-field {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .company-select {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .company-option {
+      padding: 15px;
+      background: white;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .calculate-btn {
+      width: 100%;
+      padding: 15px;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    
+    .calculate-btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .results-box {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 6px;
+    }
+    
+    .tax-section {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 2px dashed #dee2e6;
+    }
+    </style>
+    
+    <div class="calculator-container">
+      <div class="calculator-header">
+        <h2>حاسبة رسوم تابي وتمارا</h2>
+        <p>حاسبة ذكية لحساب صافي الربح بعد الخصومات</p>
+      </div>
+    
+      <div class="input-group">
+        <label>مبلغ البيع الكلي 
+          <img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol">
+        </label>
+        <input type="number" id="totalAmount" class="input-field" placeholder="مثال: 1000">
+      </div>
+    
+      <div class="company-select" id="companySelect">
+        <div class="company-option" onclick="selectCompany('tabby')" data-company="tabby">
+          <img src="https://www2.0zz0.com/2025/04/10/18/188927461.png" 
+               class="company-logo" 
+               alt="Tabby">
+          <div>نسبة الخصم: 6.99% + 1.50 ر.س</div>
+        </div>
+        
+        <div class="company-option" onclick="selectCompany('tamara')" data-company="tamara">
+          <img src="https://www2.0zz0.com/2025/04/10/18/913906129.png" 
+               class="company-logo" 
+               alt="Tamara">
+          <div>نسبة الخصم: 6.99% + 1.50 ر.س</div>
+        </div>
+      </div>
+    
+      <div class="input-group">
+        <label style="display: flex; align-items: center; gap: 8px;">
+          <input type="checkbox" id="includeTax" style="width: auto;">
+          تضمين ضريبة القيمة المضافة (15%)
+        </label>
+      </div>
+    
+      <button class="calculate-btn" onclick="calculate()">💰احسبها لي</button>
+    
+      <div class="results-box" id="results" style="display: none;">
+        <div class="result-item">
+          <span>المبلغ الإجمالي:</span>
+          <span>
+            <img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol">
+            <span id="totalAmountResult">0.00</span>
+          </span>
+        </div>
+        
+        <div class="result-item">
+          <span>نسبة الخصم:</span>
+          <span id="feePercentage">0%</span>
+        </div>
+        
+        <div class="result-item">
+          <span>قيمة الخصم:</span>
+          <span>
+            <img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol">
+            <span id="feeAmount">0.00</span>
+          </span>
+        </div>
+    
+        <div class="tax-section">
+          <div class="result-item">
+            <span>ضريبة القيمة المضافة:</span>
+            <span>
+              <img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol">
+              <span id="taxAmount">0.00</span>
+            </span>
+          </div>
+          
+          <div class="result-item" style="background: #e4f8ee; font-weight: bold;">
+            <span>الصافي النهائي:</span>
+            <span>
+              <img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol">
+              <span id="netAmount">0.00</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+    const companies = {
+      tabby: { fee: 6.99, fixed: 1.5 },
+      tamara: { fee: 6.99, fixed: 1.5 }
+    };
+    
+    let selectedCompany = 'tabby';
+    const taxRate = 15;
+    
+    function selectCompany(company) {
+      selectedCompany = company;
+      document.querySelectorAll('.company-option').forEach(el => el.classList.remove('active'));
+      document.querySelector(`[data-company="${company}"]`).classList.add('active');
+    }
+    
+    function calculate() {
+      const amount = parseFloat(document.getElementById('totalAmount').value);
+      const includeTax = document.getElementById('includeTax').checked;
+      
+      if (!amount) return alert("الرجاء إدخال مبلغ صحيح");
+    
+      const fee = (amount * companies[selectedCompany].fee) / 100 + companies[selectedCompany].fixed;
+      const tax = includeTax ? (fee * taxRate) / 100 : 0;
+      const net = amount - fee - tax;
+    
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('totalAmountResult').textContent = amount.toFixed(2);
+      document.getElementById('feePercentage').textContent = `${companies[selectedCompany].fee}% + ${companies[selectedCompany].fixed.toFixed(2)} ر.س`;
+      document.getElementById('feeAmount').textContent = fee.toFixed(2);
+      document.getElementById('taxAmount').textContent = tax.toFixed(2);
+      document.getElementById('netAmount').textContent = net.toFixed(2);
+    }
+    </script>
