@@ -68,10 +68,10 @@
     transition: transform .08s, border-color .2s, background .2s, box-shadow .2s
   }
   .company-option:hover{ transform: translateY(-1px) }
-  .company-option.active {
-  border-color: #dee2e6 !important;
-  background: #fff !important;
-  box-shadow: none !important;
+  .company-option.active{
+  border-color: transparent !important; /* إزالة الإطار الأخضر */
+  background: rgba(26,188,156,.08) !important; /* تبقى الخلفية الخضراء الناعمة */
+  box-shadow: 0 6px 16px rgba(26,188,156,.10); /* ظل خفيف بدون حدود */
 }
   .company-logo{ height:76px; width:auto; margin-bottom:12px; object-fit:contain }
 
