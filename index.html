@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light" />
 <title>حاسبة رسوم تابي وتمارا</title>
 <meta name="description" content="حاسبة ذكية لحساب صافي التاجر بعد عمولة مزودي ادفع لاحقاً (تابي/تمارا) مع ضريبة القيمة المضافة إلزاميًا.">
 <style>
   :root{
     --brand:#1ABC9C;
     --brand-dark:#148F77;
-    --bg:#f7f9fb;
+    --bg:#ffffff;
     --surface:#ffffff;
     --text:#2d3436;
     --muted:#59616a;
@@ -18,15 +19,15 @@
     --shadow-1: 0 10px 30px rgba(0,0,0,.08);
     --shadow-2: 0 18px 50px rgba(0,0,0,.10);
   }
-  #@media (prefers-color-scheme: dark){
-    :root{
-      --bg:#0e1113; --surface:#14181b; --text:#e8edf1; --muted:#aab2b9;
-      --shadow-1: 0 10px 30px rgba(0,0,0,.35);
-      --shadow-2: 0 24px 60px rgba(0,0,0,.45);
-    }
-  }
+
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 ui-rounded,"Cairo","Segoe UI",system-ui,-apple-system,Roboto,Arial}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font:16px/1.65 ui-rounded,"Cairo","Segoe UI",system-ui,-apple-system,Roboto,Arial;
+  }
+
   .calculator-container{
     max-width: 760px;
     margin: clamp(16px,4vw,32px) auto;
@@ -36,67 +37,111 @@
     box-shadow: var(--shadow-2);
     border: 1px solid rgba(0,0,0,.06);
   }
+
   .calculator-header{ text-align:center; margin-bottom:1.2rem }
   .calculator-header h2{
     font-size: clamp(1.4rem, 2.6vw, 2rem);
     margin:0 0 .35rem;
     letter-spacing:.2px
   }
-  .subtitle{
-    margin:0; color:var(--muted); font-size:.98rem
-  }
+  .subtitle{ margin:0; color:var(--muted); font-size:.98rem }
+
   .sar-symbol{ height:22px; width:auto; vertical-align:middle; margin:0 3px }
   .input-group{ margin-bottom:1rem }
   .input-group label{ display:block; margin-bottom:.5rem; color:var(--muted); font-weight:600 }
   .input-field{
-    width:100%; padding:12px 14px; border:2px solid #dee2e6; border-radius:12px; font-size:1rem; background:transparent; color:inherit;
+    width:100%; padding:12px 14px; border:2px solid #dee2e6; border-radius:12px;
+    font-size:1rem; background:transparent; color:inherit;
     transition: box-shadow .2s, border-color .2s, transform .05s
   }
   .input-field:focus{ border-color: var(--brand); box-shadow: var(--ring); outline: none }
+
   .company-select{
-    display:grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 1.1rem
+    display:grid; grid-template-columns: repeat(2, 1fr);
+    gap: 14px; margin-bottom: 1.1rem
   }
   @media (max-width:560px){ .company-select{ grid-template-columns:1fr } }
+
   .company-option{
-    padding:16px; border:2px solid #dee2e6; border-radius:14px; background: #fff; cursor:pointer; text-align:center;
+    padding:16px; border:2px solid #dee2e6; border-radius:14px; background: #fff;
+    cursor:pointer; text-align:center;
     transition: transform .08s, border-color .2s, background .2s, box-shadow .2s
   }
   .company-option:hover{ transform: translateY(-1px) }
-  .company-option.active{ border-color: var(--brand) !important; background: rgba(26,188,156,.08) !important; box-shadow: 0 8px 20px rgba(26,188,156,.12) }
+  .company-option.active{
+    border-color: var(--brand) !important;
+    background: rgba(26,188,156,.08) !important;
+    box-shadow: 0 8px 20px rgba(26,188,156,.12)
+  }
   .company-logo{ height:76px; width:auto; margin-bottom:12px; object-fit:contain }
+
   .calculate-btn{
-    width:100%; padding:14px; color:#fff; border:0; border-radius:14px; font-size:1.05rem; font-weight:800;
+    width:100%; padding:14px; color:#fff; border:0; border-radius:14px;
+    font-size:1.05rem; font-weight:800;
     background: linear-gradient(45deg, var(--brand), var(--brand-dark));
     box-shadow: 0 10px 26px rgba(26,188,156,.28);
     cursor:pointer; transition: transform .06s, filter .2s
   }
   .calculate-btn:hover{ filter: brightness(1.05) }
   .calculate-btn:active{ transform: translateY(1px) scale(.997) }
+
   .results-box{
-    margin-top: 1.4rem; padding: 1.2rem; background: var(--surface); border-radius:14px; box-shadow: var(--shadow-1)
+    margin-top: 1.4rem; padding: 1.2rem;
+    background: var(--surface); border-radius:14px;
+    box-shadow: var(--shadow-1)
   }
+
   .result-item{
     display:flex; justify-content:space-between; align-items:center;
-    margin-bottom:.75rem; padding:12px; background: #f3f6f8; border-radius:10px
+    margin-bottom:.75rem; padding:12px;
+    background: #f8f9fa !important; border-radius:10px; color: #2d3436 !important;
   }
-  @media (prefers-color-scheme: dark){ .result-item{ background:#1a2126 } }
-  .result-item strong{ font-size:1.05rem }
-  .result-accent{ background: #e4f8ee !important; font-weight: 800 }
-  @media (prefers-color-scheme: dark){ .result-accent{ background: rgba(26,188,156,.15) !important } }
+
+  .result-accent{
+    background: #e4f8ee !important;
+    color: #2d3436 !important;
+    font-weight: 800;
+  }
+
   .tax-section{ margin-top:1rem; padding-top:1rem; border-top:2px dashed #dee2e6 }
   .badge{
-    display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border-radius:999px; font-size:.82rem;
-    background: rgba(26,188,156,.10); color: var(--brand); border:1px solid rgba(26,188,156,.25)
+    display:inline-flex; gap:8px; align-items:center; padding:6px 10px;
+    border-radius:999px; font-size:.82rem;
+    background: rgba(26,188,156,.10);
+    color: var(--brand);
+    border:1px solid rgba(26,188,156,.25)
   }
   .share{
     display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:10px
   }
   .share a{
-    display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; text-decoration:none;
-    border:1px solid rgba(26,188,156,.25); background: rgba(26,188,156,.06); color:inherit
+    display:inline-flex; align-items:center; gap:8px;
+    padding:10px 12px; border-radius:12px;
+    text-decoration:none;
+    border:1px solid rgba(26,188,156,.25);
+    background: rgba(26,188,156,.06);
+    color:inherit
   }
   .share a:hover{ border-color: var(--brand) }
   .small{ color:var(--muted); font-size:.9rem }
+
+  /* تعطيل الوضع الليلي تمامًا */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #ffffff !important;
+      --surface: #ffffff !important;
+      --text: #2d3436 !important;
+      --muted: #59616a !important;
+    }
+    body {
+      background: #ffffff !important;
+      color: #2d3436 !important;
+    }
+    .result-item, .result-accent {
+      background: #f8f9fa !important;
+      color: #2d3436 !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -167,24 +212,20 @@
 </div>
 
 <script>
-  // إعدادات الشركات
   const companies = {
     tabby:  { fee: 6.99, fixed: 1.5, label: 'Tabby'  },
     tamara: { fee: 6.99, fixed: 1.5, label: 'Tamara' }
   };
-  const TAX_RATE = 15; // إلزامي 15%
-
+  const TAX_RATE = 15;
   let selectedCompany = 'tabby';
 
   function selectCompany(c){
     selectedCompany = c;
     document.querySelectorAll('.company-option').forEach(el => el.classList.remove('active'));
     document.querySelector(`[data-company="${c}"]`).classList.add('active');
-    // حساب فوري إذا في مبلغ
     if (document.getElementById('totalAmount').value) calculate();
   }
 
-  // تنسيق أرقام عربية
   const fmt = (n)=> new Intl.NumberFormat('ar', { maximumFractionDigits: 2 }).format(n);
 
   function calculate(){
@@ -193,9 +234,9 @@
     if (!amount || amount <= 0) { alert("الرجاء إدخال مبلغ صحيح"); amountEl.focus(); return; }
 
     const cfg  = companies[selectedCompany];
-    const fee  = (amount * (cfg.fee/100)) + cfg.fixed;  // عمولة قبل الضريبة
-    const tax  = fee * (TAX_RATE/100);                  // ضريبة إلزامية على العمولة
-    const net  = amount - (fee + tax);                  // صافي التاجر
+    const fee  = (amount * (cfg.fee/100)) + cfg.fixed;
+    const tax  = fee * (TAX_RATE/100);
+    const net  = amount - (fee + tax);
 
     document.getElementById('results').style.display = 'block';
     document.getElementById('totalAmountResult').textContent = fmt(amount);
@@ -207,7 +248,6 @@
     buildShareLinks();
   }
 
-  // مشاركة + تمرير القيم في الرابط
   function buildShareLinks(){
     const amount = document.getElementById('totalAmount').value || '';
     const cfg = companies[selectedCompany];
@@ -231,13 +271,11 @@
   }
   function shareBtn(label, href){ const a=document.createElement('a'); a.href=href; a.target="_blank"; a.rel="noopener"; a.textContent=label; return a; }
 
-  // تحميل قيم المشاركة من الرابط
   (function loadFromQS(){
     const qs = new URLSearchParams(location.search);
     if (qs.has('company') && companies[qs.get('company')]) selectCompany(qs.get('company')); else selectCompany('tabby');
     if (qs.has('amount')) document.getElementById('totalAmount').value = qs.get('amount');
-    if (qs.has('amount')) calculate();
-    else document.getElementById('optTabby').classList.add('active'); // افتراضي
+    if (qs.has('amount')) calculate(); else document.getElementById('optTabby').classList.add('active');
   })();
 </script>
 
