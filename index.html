@@ -125,7 +125,6 @@
   .share a:hover{ border-color: var(--brand) }
   .small{ color:var(--muted); font-size:.9rem }
 
-  /* تعطيل الوضع الليلي تمامًا */
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #ffffff !important;
@@ -177,7 +176,7 @@
   <div class="results-box" id="results" style="display:none;">
     <div class="result-item">
       <span>المبلغ الإجمالي:</span>
-      <strong><img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol" alt="SAR"><span id="totalAmountResult">0.00</span></strong>
+      <strong><img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol"><span id="totalAmountResult">0.00</span></strong>
     </div>
 
     <div class="result-item">
@@ -187,19 +186,22 @@
 
     <div class="result-item">
       <span>قيمة العمولة قبل الضريبة:</span>
-      <strong><img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol" alt="SAR"><span id="feeAmount">0.00</span></strong>
+      <strong><img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol"><span id="feeAmount">0.00</span></strong>
     </div>
 
-    <div class="tax-section">
-      <div class="result-item">
-        <span>ضريبة العمولة (15%):</span>
-        <strong><img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol" alt="SAR"><span id="taxAmount">0.00</span></strong>
-      </div>
+    <div class="result-item">
+      <span>ضريبة العمولة (15%):</span>
+      <strong><img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol"><span id="taxAmount">0.00</span></strong>
+    </div>
 
-      <div class="result-item result-accent">
-        <span>الصافي النهائي للتاجر:</span>
-        <strong><img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol" alt="SAR"><span id="netAmount">0.00</span></strong>
-      </div>
+    <div class="result-item">
+      <span>قيمة العمولة بعد الضريبة:</span>
+      <strong><img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol"><span id="feeAfterTax">0.00</span></strong>
+    </div>
+
+    <div class="result-item result-accent">
+      <span>الصافي النهائي للتاجر:</span>
+      <strong><img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol"><span id="netAmount">0.00</span></strong>
     </div>
 
     <div style="margin-top:10px" class="small">* يتم احتساب الضريبة على <b>العمولة</b> فقط، ثم يُخصم إجمالي (العمولة + الضريبة) من قيمة الطلب.</div>
@@ -236,13 +238,15 @@
     const cfg  = companies[selectedCompany];
     const fee  = (amount * (cfg.fee/100)) + cfg.fixed;
     const tax  = fee * (TAX_RATE/100);
-    const net  = amount - (fee + tax);
+    const feeAfterTax = fee + tax;
+    const net  = amount - feeAfterTax;
 
     document.getElementById('results').style.display = 'block';
     document.getElementById('totalAmountResult').textContent = fmt(amount);
     document.getElementById('feePercentage').textContent = `${cfg.fee}% + ${cfg.fixed.toFixed(2)} ر.س`;
     document.getElementById('feeAmount').textContent = fmt(fee);
     document.getElementById('taxAmount').textContent = fmt(tax);
+    document.getElementById('feeAfterTax').textContent = fmt(feeAfterTax);
     document.getElementById('netAmount').textContent = fmt(net);
 
     buildShareLinks();
