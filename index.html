@@ -111,6 +111,30 @@
     color: var(--brand);
     border:1px solid rgba(26,188,156,.25)
   }
+
+  /* ▼▼ الشارة الحمراء المتناسقة للجوال ▼▼ */
+  .badge-red {
+    display: block;
+    text-align: right;
+    background: rgba(255, 99, 71, 0.12); /* أحمر خفيف */
+    color: #c0392b; /* نص أحمر ناعم */
+    border: 1px solid rgba(255, 99, 71, 0.25);
+    border-radius: 999px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-top: 14px;
+  }
+  @media (max-width: 600px) {
+    .badge-red {
+      border-radius: 14px;        /* شكل أنسب للجوال */
+      font-size: 0.95rem;
+      padding: 12px 14px;
+      text-align: center;         /* وسط بالجوال */
+    }
+  }
+  /* ▲▲ الشارة الحمراء المتناسقة للجوال ▲▲ */
+
   .share{
     display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:10px
   }
