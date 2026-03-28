@@ -1,340 +1,666 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="color-scheme" content="light" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>حاسبة رسوم تابي وتمارا</title>
-<meta name="description" content="حاسبة ذكية لحساب صافي التاجر بعد عمولة مزودي ادفع لاحقاً (تابي/تمارا) مع ضريبة القيمة المضافة إلزاميًا.">
-  <!-- TikTok Pixel Code Start -->
+<meta name="description" content="حاسبة ذكية لحساب صافي التاجر بعد عمولة تابي أو تمارا مع ضريبة القيمة المضافة.">
+
+<!-- TikTok Pixel -->
 <script>
-!function (w, d, t) {
-  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-
-
-  ttq.load('CI5PV7RC77U4TTM9E8A0');
-  ttq.page();
-}(window, document, 'ttq');
+!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};ttq.load('CI5PV7RC77U4TTM9E8A0');ttq.page()}(window,document,'ttq');
 </script>
-<!-- TikTok Pixel Code End -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --brand:#1ABC9C;
-    --brand-dark:#148F77;
-    --bg:#ffffff;
-    --surface:#ffffff;
-    --text:#2d3436;
-    --muted:#59616a;
-    --ring: 0 0 0 3px rgba(26,188,156,.18);
-    --r-lg:16px; --r-md:12px; --r-sm:8px;
-    --shadow-1: 0 10px 30px rgba(0,0,0,.08);
-    --shadow-2: 0 18px 50px rgba(0,0,0,.10);
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font:16px/1.65 ui-rounded,"Cairo","Segoe UI",system-ui,-apple-system,Roboto,Arial;
-  }
-
-  .calculator-container{
-    max-width: 760px;
-    margin: clamp(16px,4vw,32px) auto;
-    padding: clamp(16px,3vw,28px);
-    background: var(--surface);
-    border-radius: 20px;
-    box-shadow: var(--shadow-2);
-    border: 1px solid rgba(0,0,0,.06);
-  }
-
-  .calculator-header{ text-align:center; margin-bottom:1.2rem }
-  .calculator-header h2{
-    font-size: clamp(1.4rem, 2.6vw, 2rem);
-    margin:0 0 .35rem;
-    letter-spacing:.2px
-  }
-  .subtitle{ margin:0; color:var(--muted); font-size:.98rem }
-
-  .sar-symbol{ height:22px; width:auto; vertical-align:middle; margin:0 3px }
-  .input-group{ margin-bottom:1rem }
-  .input-group label{ display:block; margin-bottom:.5rem; color:var(--muted); font-weight:600 }
-  .input-field{
-    width:100%; padding:12px 14px; border:2px solid #dee2e6; border-radius:12px;
-    font-size:1rem; background:transparent; color:inherit;
-    transition: box-shadow .2s, border-color .2s, transform .05s
-  }
-  .input-field:focus{ border-color: var(--brand); box-shadow: var(--ring); outline: none }
-
-  .company-select{
-    display:grid; grid-template-columns: repeat(2, 1fr);
-    gap: 14px; margin-bottom: 1.1rem
-  }
-  @media (max-width:560px){ .company-select{ grid-template-columns:1fr } }
-
-  .company-option{
-    padding:16px; border:2px solid #dee2e6; border-radius:14px; background: #fff;
-    cursor:pointer; text-align:center;
-    transition: transform .08s, border-color .2s, background .2s, box-shadow .2s
-  }
-  .company-option:hover{ transform: translateY(-1px) }
-  .company-option.active{
-  border-color: transparent !important;
-  background: rgba(26,188,156,.22) !important; /* درجة أوضح */
-  box-shadow: 0 8px 22px rgba(26,188,156,.15); /* ظل أعمق قليلاً */
+:root{
+  --tabby:     #3BFFC8;
+  --tabby-d:   #00b894;
+  --tabby-bg:  #f0fdf9;
+  --tabby-brd: #a7f3d0;
+  --tamara:    #16181d;
+  --tamara-acc:#f15b2a;
+  --tamara-bg: #fff4f0;
+  --tamara-brd:#fdc9b5;
+  --gray-50:   #f8fafc;
+  --gray-100:  #f1f5f9;
+  --gray-200:  #e2e8f0;
+  --gray-300:  #cbd5e1;
+  --gray-400:  #94a3b8;
+  --gray-500:  #64748b;
+  --gray-700:  #334155;
+  --gray-900:  #0f172a;
+  --white:     #ffffff;
+  --r:         20px;
+  --r-sm:      14px;
+  --ease:      cubic-bezier(.16,1,.3,1);
+  --sh-sm:     0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --sh-md:     0 4px 16px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.04);
+  --sh-lg:     0 20px 60px rgba(0,0,0,.09),0 8px 24px rgba(0,0,0,.05);
 }
-  .company-logo{ height:76px; width:auto; margin-bottom:12px; object-fit:contain }
 
-  .calculate-btn{
-    width:100%; padding:14px; color:#fff; border:0; border-radius:14px;
-    font-size:1.05rem; font-weight:800;
-    background: linear-gradient(45deg, var(--brand), var(--brand-dark));
-    box-shadow: 0 10px 26px rgba(26,188,156,.28);
-    cursor:pointer; transition: transform .06s, filter .2s
-  }
-  .calculate-btn:hover{ filter: brightness(1.05) }
-  .calculate-btn:active{ transform: translateY(1px) scale(.997) }
+html{font-size:16px}
+body{
+  font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;
+  background:linear-gradient(160deg,#f0fdf9 0%,#fef9f6 45%,#f8fafc 100%);
+  min-height:100vh;
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:32px 16px 64px;
+  color:var(--gray-900);
+}
 
-  .results-box{
-    margin-top: 1.4rem; padding: 1.2rem;
-    background: var(--surface); border-radius:14px;
-    box-shadow: var(--shadow-1)
-  }
+/* ── CARD ─────────────────────────────── */
+.card{
+  width:100%;max-width:680px;
+  background:var(--white);
+  border-radius:28px;
+  border:1.5px solid var(--gray-200);
+  box-shadow:var(--sh-lg);
+  overflow:hidden;
+  animation:cardIn .55s var(--ease) both;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(22px) scale(.99)}to{opacity:1;transform:none}}
 
-  .result-item{
-    display:flex; justify-content:space-between; align-items:center;
-    margin-bottom:.75rem; padding:12px;
-    background: #f8f9fa !important; border-radius:10px; color: #2d3436 !important;
-  }
+/* ── HEADER ───────────────────────────── */
+.header{
+  padding:36px 36px 26px;
+  border-bottom:1.5px solid var(--gray-100);
+  position:relative;overflow:hidden;
+}
+.hbar{
+  position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--tabby),#f15b2a);
+  border-radius:28px 28px 0 0;
+}
+.header::after{
+  content:'';position:absolute;bottom:-60px;left:-40px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(59,255,200,.07),transparent 70%);
+  pointer-events:none;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--tabby-d);
+  background:var(--tabby-bg);
+  border:1.5px solid var(--tabby-brd);
+  border-radius:999px;padding:5px 13px;margin-bottom:14px;
+}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--tabby-d);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.header h1{font-size:clamp(1.45rem,3.5vw,2rem);font-weight:900;color:var(--gray-900);margin-bottom:8px;letter-spacing:-.3px;line-height:1.2}
+.header p{font-size:.9rem;color:var(--gray-500);line-height:1.65}
+.header p b{color:#b45309;font-weight:700}
 
-  .result-accent{
-    background: #e4f8ee !important;
-    color: #2d3436 !important;
-    font-weight: 800;
-  }
+/* ── BODY ─────────────────────────────── */
+.body{padding:28px 36px 32px;display:flex;flex-direction:column;gap:22px}
 
-  .tax-section{ margin-top:1rem; padding-top:1rem; border-top:2px dashed #dee2e6 }
-  .badge{
-    display:inline-flex; gap:8px; align-items:center; padding:6px 10px;
-    border-radius:999px; font-size:.82rem;
-    background: rgba(26,188,156,.10);
-    color: var(--brand);
-    border:1px solid rgba(26,188,156,.25)
-  }
+/* ── FIELD LABEL ──────────────────────── */
+.flabel{display:block;margin-bottom:9px;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-400)}
 
-  /* ▼▼ الشارة الحمراء المتناسقة للجوال ▼▼ */
-  .badge-red {
-    display: block;
-    text-align: right;
-    background: rgba(255, 99, 71, 0.12); /* أحمر خفيف */
-    color: #c0392b; /* نص أحمر ناعم */
-    border: 1px solid rgba(255, 99, 71, 0.25);
-    border-radius: 999px;
-    padding: 10px 16px;
-    font-size: 0.9rem;
-    line-height: 1.7;
-    margin-top: 14px;
-  }
-  @media (max-width: 600px) {
-    .badge-red {
-      border-radius: 14px;        /* شكل أنسب للجوال */
-      font-size: 0.95rem;
-      padding: 12px 14px;
-      text-align: center;         /* وسط بالجوال */
-    }
-  }
-  /* ▲▲ الشارة الحمراء المتناسقة للجوال ▲▲ */
+/* ── AMOUNT INPUT ─────────────────────── */
+.inp-wrap{position:relative}
+.inp-prefix{
+  position:absolute;right:15px;top:50%;transform:translateY(-50%);
+  display:flex;align-items:center;gap:5px;
+  font-size:.85rem;font-weight:700;color:var(--gray-400);pointer-events:none;
+}
+.inp-prefix img{height:14px;opacity:.5}
+.amount-inp{
+  width:100%;padding:16px 62px 16px 18px;
+  background:var(--gray-50);border:1.5px solid var(--gray-200);
+  border-radius:var(--r-sm);
+  font-family:'IBM Plex Sans Arabic',sans-serif;
+  direction:ltr;text-align:right;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+  -webkit-appearance:none;
+}
+.amount-inp::placeholder{color:var(--gray-300);font-weight:400}
+.amount-inp:focus{
+  outline:none;background:var(--white);
+  border-color:var(--tabby-d);
+  box-shadow:0 0 0 4px rgba(0,184,148,.12);
+}
 
-  .share{
-    display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:10px
-  }
-  .share a{
-    display:inline-flex; align-items:center; gap:8px;
-    padding:10px 12px; border-radius:12px;
-    text-decoration:none;
-    border:1px solid rgba(26,188,156,.25);
-    background: rgba(26,188,156,.06);
-    color:inherit
-  }
-  .share a:hover{ border-color: var(--brand) }
-  .small{ color:var(--muted); font-size:.9rem }
+/* ── PROVIDERS ────────────────────────── */
+.providers{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pcard{
+  position:relative;padding:22px 16px 18px;
+  background:var(--gray-50);border:2px solid var(--gray-200);
+  border-radius:var(--r);cursor:pointer;text-align:center;
+  transition:all .22s var(--ease);
+  user-select:none;-webkit-tap-highlight-color:transparent;
+}
+.pcard:hover{border-color:var(--gray-300);box-shadow:var(--sh-md);transform:translateY(-2px)}
+.pcard.active[data-p="tabby"]{
+  border-color:var(--tabby-d);background:var(--tabby-bg);
+  box-shadow:0 0 0 1px var(--tabby-d),0 8px 24px rgba(0,184,148,.14);
+}
+.pcard.active[data-p="tamara"]{
+  border-color:#f15b2a;background:var(--tamara-bg);
+  box-shadow:0 0 0 1px #f15b2a,0 8px 24px rgba(241,91,42,.18);
+}
+.pcheck{
+  position:absolute;top:10px;left:10px;
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:900;
+  opacity:0;transform:scale(0);transition:all .2s var(--ease);
+}
+.pcard.active[data-p="tabby"]  .pcheck{background:var(--tabby-d);color:#fff;opacity:1;transform:scale(1)}
+.pcard.active[data-p="tamara"] .pcheck{background:#f15b2a;color:#fff;opacity:1;transform:scale(1)}
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #ffffff !important;
-      --surface: #ffffff !important;
-      --text: #2d3436 !important;
-      --muted: #59616a !important;
-    }
-    body {
-      background: #ffffff !important;
-      color: #2d3436 !important;
-    }
-    .result-item, .result-accent {
-      background: #f8f9fa !important;
-      color: #2d3436 !important;
-    }
-  }
+.logo-area{
+  height:72px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:12px;
+}
+.logo-area svg{max-height:100%;width:auto;transition:transform .22s var(--ease)}
+.pcard:hover .logo-area svg,.pcard.active .logo-area svg{transform:scale(1.05)}
+
+.pfee{
+  display:inline-block;font-size:.74rem;font-weight:700;
+  color:var(--gray-400);background:var(--white);
+  border:1px solid var(--gray-200);border-radius:999px;padding:4px 12px;
+  transition:all .2s;
+}
+.pcard.active[data-p="tabby"]  .pfee{color:var(--tabby-d);border-color:var(--tabby-brd);background:rgba(255,255,255,.8)}
+.pcard.active[data-p="tamara"] .pfee{color:#d44a1e;border-color:var(--tamara-brd);background:rgba(255,255,255,.8)}
+
+/* ── VAT ──────────────────────────────── */
+.vat{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 16px;
+  background:#fffbeb;border:1.5px solid #fde68a;
+  border-radius:var(--r-sm);
+  font-size:.85rem;font-weight:600;color:#92400e;
+}
+
+/* ── BUTTON ───────────────────────────── */
+.cbtn{
+  width:100%;padding:17px;border:none;border-radius:var(--r-sm);
+  font-family:'IBM Plex Sans Arabic',sans-serif;
+  color:var(--white);
+  background:linear-gradient(135deg,var(--tabby-d),#00a07d);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;
+  box-shadow:0 8px 24px rgba(0,184,148,.28);
+  transition:all .22s var(--ease);letter-spacing:.01em;
+  position:relative;overflow:hidden;
+}
+.cbtn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.16),transparent);opacity:0;transition:opacity .2s}
+.cbtn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(0,184,148,.36)}
+.cbtn:hover::after{opacity:1}
+.cbtn:active{transform:translateY(0)}
+
+/* ── RESULTS ──────────────────────────── */
+.results{
+  display:none;flex-direction:column;gap:0;
+  border-top:1.5px solid var(--gray-100);
+  margin:0 -36px;padding:28px 36px 0;
+  animation:resIn .45s var(--ease) both;
+}
+@keyframes resIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.results.show{display:flex}
+
+.res-title{
+  font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gray-400);margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.res-title::after{content:'';flex:1;height:1.5px;background:var(--gray-100)}
+
+.rr{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:11px 14px;border-radius:10px;margin-bottom:4px;transition:background .15s;
+}
+.rr:hover{background:var(--gray-50)}
+.rr-l{font-size:.9rem;color:var(--gray-500);font-weight:500}
+.rr-v{font-size:.97rem;font-weight:800;color:var(--gray-700);display:flex;align-items:center;gap:5px}
+.rr-v img{height:13px;opacity:.5}
+
+.rr.hl{
+  background:var(--tabby-bg);border:1.5px solid var(--tabby-brd);
+  margin-top:10px;padding:16px 18px;
+}
+.rr.hl.t-tamara{background:var(--tamara-bg);border-color:var(--tamara-brd)}
+.rr.hl .rr-l{color:var(--gray-700);font-weight:800;font-size:.97rem}
+.rr.hl .rr-v{font-size:1.5rem;color:var(--tabby-d)}
+.rr.hl.t-tamara .rr-v{color:#d44a1e}
+.rr.hl .rr-v img{height:18px;opacity:.7}
+
+.rr.warn{
+  background:#fffbeb;border:1.5px solid #fde68a;
+  margin-top:6px;align-items:flex-start;gap:8px;
+}
+.rr.warn .rr-l{color:#92400e;font-size:.82rem;line-height:1.65}
+
+/* ── FEEDFLOW PROMO ───────────────────── */
+.ff{
+  margin-top:20px;padding:24px 22px;
+  border-radius:var(--r);
+  background:linear-gradient(135deg,#eff6ff,#e8f2ff);
+  border:1.5px solid #bfdbfe;
+  box-shadow:0 4px 16px rgba(59,130,246,.07);
+  position:relative;overflow:hidden;
+  animation:ffIn .5s .15s var(--ease) both;
+}
+@keyframes ffIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.ff::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle,rgba(59,130,246,.07) 1px,transparent 1px);
+  background-size:22px 22px;
+}
+.ff-top{display:flex;align-items:flex-start;gap:14px;position:relative;z-index:1;margin-bottom:16px}
+.ff-ico{
+  width:48px;height:48px;border-radius:14px;flex-shrink:0;
+  background:linear-gradient(135deg,#3b82f6,#1d4ed8);
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+  box-shadow:0 4px 14px rgba(59,130,246,.28);
+}
+.ff-ey{font-size:.67rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#2563eb;margin-bottom:4px}
+.ff-tit{font-size:.98rem;font-weight:900;color:var(--gray-900);line-height:1.3;margin-bottom:3px}
+.ff-sub{font-size:.79rem;color:var(--gray-400);font-weight:500}
+.ff-feats{position:relative;z-index:1;display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.ff-feat{display:flex;align-items:center;gap:9px;font-size:.84rem;color:var(--gray-500);font-weight:500}
+.ff-feat .ck{
+  width:20px;height:20px;border-radius:6px;flex-shrink:0;
+  background:#dbeafe;border:1px solid #bfdbfe;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.67rem;color:#1d4ed8;font-weight:900;
+}
+.ff-feat strong{color:var(--gray-700)}
+.ff-tags{position:relative;z-index:1;display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.ff-tag{font-size:.7rem;font-weight:700;padding:4px 11px;border-radius:999px;background:#dbeafe;border:1px solid #bfdbfe;color:#1d4ed8}
+.ff-tag.gold{background:#fef3c7;border-color:#fde68a;color:#92400e}
+.ff-cta{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  border-radius:14px;
+  text-decoration:none;color:#fff;
+  font-weight:900;font-size:.92rem;
+  box-shadow:0 6px 18px rgba(37,99,235,.28);
+  transition:all .22s var(--ease);gap:10px;
+}
+.ff-cta:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,99,235,.38);filter:brightness(1.05)}
+.ff-cta:active{transform:none}
+.cta-l{display:flex;align-items:center;gap:8px}
+.arr{font-size:1.1rem;transition:transform .2s}
+.ff-cta:hover .arr{transform:translateX(-4px)}
+
+/* ── SHARE ────────────────────────────── */
+.share{margin-top:20px;padding-top:20px;border-top:1.5px solid var(--gray-100);text-align:center}
+.share-lbl{font-size:.79rem;font-weight:700;color:var(--gray-400);margin-bottom:12px}
+.share-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.sbtn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:9px 15px;border-radius:10px;
+  border:1.5px solid var(--gray-200);background:var(--white);
+  color:var(--gray-500);
+  font-family:'IBM Plex Sans Arabic',sans-serif;
+  text-decoration:none;cursor:pointer;transition:all .18s;
+  box-shadow:var(--sh-sm);
+}
+.sbtn:hover{border-color:var(--gray-300);background:var(--gray-50);color:var(--gray-700);transform:translateY(-1px);box-shadow:var(--sh-md)}
+
+/* ── FOOTER ───────────────────────────── */
+.footer{padding:18px 36px 24px;text-align:center;font-size:.75rem;color:var(--gray-300);border-top:1.5px solid var(--gray-100);margin-top:8px}
+
+/* ── RESPONSIVE ───────────────────────── */
+@media(max-width:520px){
+  body{padding:12px 10px 48px}
+  .header,.body{padding-inline:20px}
+  .results{margin-inline:-20px;padding-inline:20px}
+  .footer{padding-inline:20px}
+  .header{padding-block:26px 20px}
+  .body{gap:16px}
+  .providers{gap:10px}
+  .pcard{padding:18px 12px 16px}
+  .logo-area{height:60px;margin-bottom:10px}
+  .cbtn{font-size:1rem;padding:15px}
+  .rr.hl .rr-v{font-size:1.25rem}
+  .ff-cta{flex-direction:column;align-items:flex-start;gap:8px}
+  .ff{padding:18px 16px}
+}
 </style>
 </head>
 <body>
 
-<div class="calculator-container">
-  <div class="calculator-header">
-    <h2>حاسبة رسوم تابي وتمارا</h2>
-    <p class="subtitle">حساب صافي التاجر بعد عمولة المزود + <b>ضريبة القيمة المضافة الإلزامية (15%)</b></p>
+<div class="card">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="hbar"></div>
+    <div class="eyebrow"><span class="dot"></span> أداة التاجر الذكي</div>
+    <h1>حاسبة رسوم تابي وتمارا</h1>
+    <p>احسب صافيك بعد عمولة المزود + <b>ضريبة القيمة المضافة (15%)</b> تلقائياً</p>
   </div>
 
-  <div class="input-group">
-    <label>مبلغ البيع الكلي
-      <img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol" alt="SAR">
-    </label>
-    <input type="number" id="totalAmount" class="input-field" placeholder="مثال: 1000" inputmode="decimal" step="0.01">
-  </div>
+  <!-- BODY -->
+  <div class="body">
 
-  <div class="company-select" id="companySelect">
-    <div class="company-option" onclick="selectCompany('tabby')" data-company="tabby" id="optTabby">
-      <img src="https://www2.0zz0.com/2025/04/10/18/188927461.png" class="company-logo" alt="Tabby">
-      <div class="small">نسبة الخصم: 6.99% + 1.50 ر.س</div>
-    </div>
-    <div class="company-option" onclick="selectCompany('tamara')" data-company="tamara" id="optTamara">
-      <img src="https://www2.0zz0.com/2025/04/10/18/913906129.png" class="company-logo" alt="Tamara">
-      <div class="small">نسبة الخصم: 6.99% + 1.50 ر.س</div>
-    </div>
-  </div>
-
-  <div class="badge">ضريبة القيمة المضافة تُحتسب تلقائيًا: 15% على عمولة المزود</div>
-
-  <button class="calculate-btn" onclick="calculate()">💰 احسبها لي</button>
-
-  <div class="results-box" id="results" style="display:none;">
-    <div class="result-item">
-      <span>المبلغ الإجمالي:</span>
-      <strong><img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol"><span id="totalAmountResult">0.00</span></strong>
+    <!-- AMOUNT -->
+    <div>
+      <label class="flabel">مبلغ البيع الكلي</label>
+      <div class="inp-wrap">
+        <div class="inp-prefix">
+          <img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" alt="SAR"> ر.س
+        </div>
+        <input
+          type="text"
+          inputmode="decimal"
+          id="totalAmount"
+          class="amount-inp"
+          placeholder="٠٫٠٠"
+          oninput="onAmountChange(this)"
+          autocomplete="off"
+        >
+      </div>
     </div>
 
-    <div class="result-item">
-      <span>نسبة وعمولة المزود:</span>
-      <strong id="feePercentage">—</strong>
+    <!-- PROVIDERS -->
+    <div>
+      <label class="flabel">اختر مزود الدفع الآجل</label>
+      <div class="providers">
+
+        <!-- TABBY -->
+        <div class="pcard active" data-p="tabby" onclick="selectCompany('tabby')">
+          <span class="pcheck">✓</span>
+          <div class="logo-area">
+            <!-- شعار تابي الرسمي -->
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000" style="height:68px;width:auto">
+              <defs>
+                <linearGradient id="tabbyGrad" gradientUnits="userSpaceOnUse" x1="119.4118" y1="502" x2="880.5883" y2="502" gradientTransform="matrix(1 0 0 -1 0 1002)">
+                  <stop offset="0" style="stop-color:#3BFF9D"/>
+                  <stop offset="1" style="stop-color:#3BFFC8"/>
+                </linearGradient>
+              </defs>
+              <path fill="url(#tabbyGrad)" d="M821.64,651.6H178.36c-32.52,0-58.95-26.43-58.95-59.03V407.35c0-32.52,26.43-58.95,58.95-58.95h643.28c32.6,0,58.95,26.43,58.95,58.95v185.23C880.59,625.17,854.16,651.6,821.64,651.6z"/>
+              <g fill="#292929">
+                <polygon points="778.15,444.59 737.48,600.04 737.32,600.35 769.09,600.35 809.91,444.59"/>
+                <path d="M274.4,533.02c-4.19,2.21-9.9,3.5-15.31,3.5c-11.42,0-17.9-1.83-18.58-11.04v-0.61c0-0.38-0.08-0.76-0.08-1.14v-26.81l0.08-3.2v-18.96h-0.08v-8.07l0.08-3.2V445.2l-28.33,3.73c19.19-3.73,30.16-18.89,30.16-33.97v-9.29H210.5v43.49l-1.83,0.53v80.58c1.07,22.62,15.99,36.1,40.44,36.1c8.68,0,18.2-1.98,25.51-5.26l0.15-0.08v-28.26L274.4,533.02z"/>
+                <polygon points="279.43,438.73 190.09,452.51 190.09,475.13 279.43,461.35"/>
+                <polygon points="279.43,471.86 190.09,485.64 190.09,507.27 279.43,493.49"/>
+                <path d="M379.59,482.29c-1.29-25.13-16.98-40.06-42.58-40.06c-14.7,0-26.89,5.71-35.11,16.45c-8.23,10.74-12.57,26.5-12.57,45.62s4.34,34.96,12.57,45.62c8.23,10.74,20.41,16.45,35.11,16.45c25.59,0,41.36-15,42.58-40.29v37.93h31.84v-119.2l-31.84,4.87 M381.26,504.3c0,22.32-11.73,36.71-29.78,36.71c-18.66,0-29.78-13.71-29.78-36.71c0-23.08,11.12-36.94,29.78-36.94c9.06,0,16.68,3.5,21.94,10.21C378.52,484.2,381.26,493.41,381.26,504.3z"/>
+                <path d="M504.27,442.23c-25.67,0-41.36,14.93-42.58,40.14v-72.2l-31.84,4.87v148.98h31.84v-37.93c1.22,25.29,16.98,40.29,42.58,40.29c30.01,0,47.91-23.23,47.91-62.07S534.27,442.23,504.27,442.23z M489.79,541.01c-18.13,0-29.78-14.39-29.78-36.71c0-10.89,2.74-20.11,7.84-26.66c5.26-6.7,12.87-10.21,21.94-10.21c18.66,0,29.78,13.79,29.78,36.94C519.57,527.3,508.45,541.01,489.79,541.01z"/>
+                <path d="M638.77,442.23c-25.67,0-41.36,14.93-42.58,40.14v-72.2l-31.84,4.87v148.98h31.84v-37.93c1.22,25.29,16.98,40.29,42.58,40.29c30.01,0,47.91-23.23,47.91-62.07S668.78,442.23,638.77,442.23z M624.37,541.01c-18.13,0-29.78-14.39-29.78-36.71c0-10.89,2.74-20.11,7.84-26.66c5.26-6.7,12.87-10.21,21.94-10.21c18.66,0,29.78,13.79,29.78,36.94C654.15,527.3,643.03,541.01,624.37,541.01z"/>
+                <polygon points="686.75,444.59 720.72,444.59 748.37,563.86 717.9,563.86"/>
+              </g>
+            </svg>
+          </div>
+          <div class="pfee">6.99% + 1.50 ر.س</div>
+        </div>
+
+        <!-- TAMARA -->
+        <div class="pcard" data-p="tamara" onclick="selectCompany('tamara')">
+          <span class="pcheck">✓</span>
+          <div class="logo-area">
+            <!-- شعار تمارا الرسمي -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" style="height:68px;width:auto">
+              <path fill="#16181d" d="M231.15,434.36v118.52c0,.72-.6,1.32-1.33,1.32h-22.16c-.73,0-1.33-.6-1.33-1.32v-118.52c0-.72.6-1.32,1.33-1.32h22.16c.74,0,1.33.6,1.33,1.32ZM302.27,473.08h-22.16c-.73,0-1.33.6-1.33,1.32v71.29c0,8.23-7.18,15.14-15.38,15.14h-17.74c-.93,0-1.56.93-1.25,1.77l8.31,21.97c.19.52.68.85,1.23.85l9.64.05c22.08,0,39.98-17.78,39.98-39.72v-71.35c.02-.74-.58-1.32-1.31-1.32ZM763.78,452.24c10.96.2,19.89-8.67,19.68-19.55-.19-10.26-8.62-18.64-18.94-18.83-10.96-.2-19.89,8.67-19.68,19.55.17,10.27,8.62,18.64,18.94,18.83ZM727.33,451.48c.19.16.44.22.68.13,7.65-2.65,13.09-9.96,12.9-18.52-.24-10.29-8.8-18.61-19.16-18.66-9.44-.03-17.31,6.68-18.99,15.56-.05.24.05.49.24.64l24.33,20.84ZM793.67,472.94v23.61c0,.72-.6,1.32-1.33,1.32h-103.13c1.91,4.76,2.97,9.96,2.97,15.39,0,21.99-17.25,40.02-39,41.51l.25.2h-253.5c-53.92,0-73.65-18.5-73.65-66.48v-54.12c0-.72.6-1.32,1.33-1.32h23.66c.73,0,1.33.6,1.33,1.32v57.99c0,24.14,8.79,34.24,35.76,36.36h223.03c-1.94-4.79-3.02-10.01-3.02-15.47,0-22.24,17.66-40.47,39.79-41.57l-.03-.05h144.2c.74,0,1.33.58,1.33,1.32ZM667.41,513.16c0-9.28-8.09-16.92-17.37-16.92s-16.87,7.63-16.87,16.92,7.59,17.09,16.87,17.09,17.37-7.81,17.37-17.09Z"/>
+            </svg>
+          </div>
+          <div class="pfee">6.99% + 1.50 ر.س</div>
+        </div>
+
+      </div>
     </div>
 
-    <div class="result-item">
-      <span>قيمة العمولة قبل الضريبة:</span>
-      <strong><img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol"><span id="feeAmount">0.00</span></strong>
+    <!-- VAT -->
+    <div class="vat">
+      <span style="font-size:1.1rem;flex-shrink:0">⚡</span>
+      ضريبة القيمة المضافة 15% تُحتسب تلقائياً على عمولة المزود
     </div>
 
-    <div class="result-item">
-      <span>ضريبة العمولة (15%):</span>
-      <strong><img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol"><span id="taxAmount">0.00</span></strong>
-    </div>
+    <!-- BUTTON -->
+    <button class="cbtn" id="calcBtn" onclick="calculate()">
+      <span style="font-size:1.25rem">💰</span>
+      احسبها لي
+    </button>
 
-    <div class="result-item">
-      <span>قيمة العمولة بعد الضريبة:</span>
-      <strong><img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol"><span id="feeAfterTax">0.00</span></strong>
-    </div>
+    <!-- RESULTS -->
+    <div class="results" id="results">
+      <div class="res-title">النتيجة</div>
 
-    <div class="result-item result-accent">
-      <span>الصافي النهائي للتاجر:</span>
-      <strong><img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" class="sar-symbol"><span id="netAmount">0.00</span></strong>
-    </div>
+      <div class="rr">
+        <span class="rr-l">المبلغ الإجمالي</span>
+        <span class="rr-v">
+          <img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" alt="">
+          <span id="rTotal">0.00</span>
+        </span>
+      </div>
+      <div class="rr">
+        <span class="rr-l">نسبة وعمولة المزود</span>
+        <strong class="rr-v" id="rFeeLabel">—</strong>
+      </div>
+      <div class="rr">
+        <span class="rr-l">قيمة العمولة قبل الضريبة</span>
+        <span class="rr-v">
+          <img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" alt="">
+          <span id="rFee">0.00</span>
+        </span>
+      </div>
+      <div class="rr">
+        <span class="rr-l">ضريبة العمولة (15%)</span>
+        <span class="rr-v">
+          <img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" alt="">
+          <span id="rTax">0.00</span>
+        </span>
+      </div>
+      <div class="rr">
+        <span class="rr-l">العمولة بعد الضريبة</span>
+        <span class="rr-v">
+          <img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" alt="">
+          <span id="rFeeAfterTax">0.00</span>
+        </span>
+      </div>
 
-    <div class="badge badge-red" style="margin-top:12px;">
-  ⚠️ يتم احتساب ضريبة القيمة المضافة تلقائيًا بنسبة <b>15%</b> على عمولة المزود فقط، ثم يُخصم الإجمالي (العمولة + الضريبة) من قيمة الطلب.
-</div>
+      <!-- NET -->
+      <div class="rr hl" id="rHL">
+        <span class="rr-l">✦ الصافي النهائي للتاجر</span>
+        <span class="rr-v">
+          <img src="https://www.sama.gov.sa/ar-sa/Currency/Documents/Saudi_Riyal_Symbol-2.svg" alt="" style="height:18px;opacity:.7">
+          <span id="rNet">0.00</span>
+        </span>
+      </div>
 
-  <div style="text-align:center; margin-top:18px;">
-    <div style="margin-bottom:8px; font-weight:800">شارك الحاسبه مع تاجر غيرك:</div>
-    <div class="share" id="shareLinks"></div>
-  </div>
+      <!-- WARN -->
+      <div class="rr warn">
+        <span class="rr-l">⚠️ يتم احتساب الضريبة على عمولة المزود فقط، ثم يُخصم الإجمالي (العمولة + الضريبة) من قيمة الطلب.</span>
+      </div>
+
+      <!-- FEEDFLOW PROMO -->
+      <div class="ff">
+        <div class="ff-top">
+          <div class="ff-ico">⭐</div>
+          <div>
+            <div class="ff-ey">مخصص لتجار سلة</div>
+            <div class="ff-tit">حوّل تقييمات متجرك إلى مبيعات أكثر</div>
+            <div class="ff-sub">مع FeedFlow — لوحة تحكم ذكية لإدارة التقييمات</div>
+          </div>
+        </div>
+        <div class="ff-feats">
+          <div class="ff-feat"><span class="ck">✓</span><span>يسحب تقييمات متجرك ويرفعها لـ <strong>Google Merchant</strong> تلقائياً</span></div>
+          <div class="ff-feat"><span class="ck">✓</span><span>يفعّل <strong>استطلاع Google للعملاء</strong> بعد كل طلب</span></div>
+          <div class="ff-feat"><span class="ck">✓</span><span>النجوم تظهر في إعلاناتك على Google وترفع نسبة النقر</span></div>
+        </div>
+        <div class="ff-tags">
+          <span class="ff-tag gold">★ حصري لتجار سلة</span>
+          <span class="ff-tag">XML متوافق مع Google</span>
+          <span class="ff-tag">سهل الإعداد</span>
+        </div>
+        <!-- رابط مع UTM tracking للتعرف على زوار الحاسبة -->
+        <a href="https://feedflow.pro/?utm_source=calculator&utm_medium=referral&utm_campaign=tabby-tamara&utm_content=cta-button"
+           target="_blank" rel="noopener" class="ff-cta">
+          <span class="cta-l"><span>🚀</span><span>اكتشف FeedFlow وجرّبه مجاناً</span></span>
+          <span class="arr">←</span>
+        </a>
+      </div>
+
+      <!-- SHARE -->
+      <div class="share">
+        <div class="share-lbl">شارك الحاسبة مع تاجر غيرك</div>
+        <div class="share-btns" id="shareLinks"></div>
+      </div>
+
+    </div><!-- /results -->
+  </div><!-- /body -->
+
+  <div class="footer">الأرقام تقديرية · يُنصح بمراجعة اتفاقيتك مع المزود للتأكيد</div>
 </div>
 
 <script>
-  const companies = {
-    tabby:  { fee: 6.99, fixed: 1.5, label: 'Tabby'  },
-    tamara: { fee: 6.99, fixed: 1.5, label: 'Tamara' }
+// ── الأرقام العربية والإنجليزية ──────────
+const AR_DIGITS = '٠١٢٣٤٥٦٧٨٩';
+
+function toEnglishDigits(str) {
+  // يحوّل الأرقام العربية/الهندية إلى إنجليزية
+  return str.replace(/[٠-٩]/g, d => AR_DIGITS.indexOf(d));
+}
+
+function parseAmount(str) {
+  if (!str) return NaN;
+  // تحويل الأرقام العربية ثم parse
+  const cleaned = toEnglishDigits(str.trim()).replace(/[^\d.]/g, '');
+  return parseFloat(cleaned);
+}
+
+function onAmountChange(el) {
+  // نمنع إدخال أحرف غير أرقام (عربية/إنجليزية) ونقطة
+  const raw = el.value;
+  const allowed = raw.replace(/[^\d٠-٩.]/g, '');
+  if (raw !== allowed) el.value = allowed;
+  document.getElementById('results').classList.remove('show');
+}
+
+// ── DATA ──────────────────────────────────
+const PROVIDERS = {
+  tabby:  { fee: 6.99, fixed: 1.5, label: 'Tabby'  },
+  tamara: { fee: 6.99, fixed: 1.5, label: 'Tamara' },
+};
+let sel = 'tabby';
+
+// ── SELECT PROVIDER ───────────────────────
+function selectCompany(p) {
+  sel = p;
+  document.querySelectorAll('.pcard').forEach(c => c.classList.remove('active'));
+  document.querySelector(`[data-p="${p}"]`).classList.add('active');
+
+  const btn = document.getElementById('calcBtn');
+  if (p === 'tamara') {
+    btn.style.background = 'linear-gradient(135deg,#f15b2a,#d44a1e)';
+    btn.style.boxShadow  = '0 8px 24px rgba(241,91,42,.28)';
+  } else {
+    btn.style.background = 'linear-gradient(135deg,#00b894,#00a07d)';
+    btn.style.boxShadow  = '0 8px 24px rgba(0,184,148,.28)';
+  }
+  const inp = document.getElementById('totalAmount');
+  if (inp.value) calculate();
+}
+
+// ── FORMAT ────────────────────────────────
+const fmt = n => new Intl.NumberFormat('ar-SA', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+}).format(n);
+
+// ── CALCULATE ─────────────────────────────
+function calculate() {
+  const el = document.getElementById('totalAmount');
+  const amount = parseAmount(el.value);
+
+  if (isNaN(amount) || amount <= 0) {
+    el.focus();
+    el.style.borderColor = '#f87171';
+    el.style.boxShadow   = '0 0 0 4px rgba(248,113,113,.14)';
+    setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 1400);
+    return;
+  }
+
+  const cfg = PROVIDERS[sel];
+  const fee         = (amount * cfg.fee / 100) + cfg.fixed;
+  const tax         = fee * 0.15;
+  const feeAfterTax = fee + tax;
+  const net         = amount - feeAfterTax;
+
+  document.getElementById('rTotal').textContent       = fmt(amount);
+  document.getElementById('rFeeLabel').textContent    = `${cfg.fee}% + ${cfg.fixed.toFixed(2)} ر.س`;
+  document.getElementById('rFee').textContent         = fmt(fee);
+  document.getElementById('rTax').textContent         = fmt(tax);
+  document.getElementById('rFeeAfterTax').textContent = fmt(feeAfterTax);
+  document.getElementById('rNet').textContent         = fmt(net);
+
+  const hl = document.getElementById('rHL');
+  sel === 'tamara' ? hl.classList.add('t-tamara') : hl.classList.remove('t-tamara');
+
+  const res = document.getElementById('results');
+  res.classList.add('show');
+  setTimeout(() => res.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
+
+  buildShare(amount, cfg);
+}
+
+// ── SHARE LINKS ───────────────────────────
+function buildShare(amount, cfg) {
+  const base = location.origin + location.pathname;
+  const qs   = new URLSearchParams({ amount, company: sel });
+  const url  = base + '?' + qs;
+  const text = `حاسبة رسوم ${cfg.label}: قيمة الطلب ${amount} ر.س + ضريبة العمولة 15% — جرّبها: `;
+
+  const links = [
+    { l: '📱 واتساب',    h: `https://wa.me/?text=${encodeURIComponent(text + url)}` },
+    { l: '𝕏 تويتر',     h: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}` },
+    { l: '✈️ تيليجرام', h: `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}` },
+  ];
+
+  const box = document.getElementById('shareLinks');
+  box.innerHTML = '';
+  links.forEach(({ l, h }) => {
+    const a = document.createElement('a');
+    a.className = 'sbtn'; a.href = h; a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = l; box.appendChild(a);
+  });
+
+  const copy = document.createElement('button');
+  copy.className = 'sbtn'; copy.textContent = '🔗 نسخ الرابط';
+  copy.onclick = () => {
+    navigator.clipboard.writeText(url).then(() => {
+      copy.textContent = '✅ تم النسخ';
+      setTimeout(() => copy.textContent = '🔗 نسخ الرابط', 2000);
+    });
   };
-  const TAX_RATE = 15;
-  let selectedCompany = 'tabby';
+  box.appendChild(copy);
+}
 
-  function selectCompany(c){
-    selectedCompany = c;
-    document.querySelectorAll('.company-option').forEach(el => el.classList.remove('active'));
-    document.querySelector(`[data-company="${c}"]`).classList.add('active');
-    if (document.getElementById('totalAmount').value) calculate();
+// ── LOAD FROM QUERY STRING ────────────────
+(function init() {
+  const qs = new URLSearchParams(location.search);
+  const co = qs.get('company');
+  if (co && PROVIDERS[co]) selectCompany(co);
+  const am = qs.get('amount');
+  if (am) {
+    document.getElementById('totalAmount').value = am;
+    calculate();
   }
-
-  const fmt = (n)=> new Intl.NumberFormat('ar', { maximumFractionDigits: 2 }).format(n);
-
-  function calculate(){
-    const amountEl = document.getElementById('totalAmount');
-    const amount = parseFloat(amountEl.value);
-    if (!amount || amount <= 0) { alert("الرجاء إدخال مبلغ صحيح"); amountEl.focus(); return; }
-
-    const cfg  = companies[selectedCompany];
-    const fee  = (amount * (cfg.fee/100)) + cfg.fixed;
-    const tax  = fee * (TAX_RATE/100);
-    const feeAfterTax = fee + tax;
-    const net  = amount - feeAfterTax;
-
-    document.getElementById('results').style.display = 'block';
-    document.getElementById('totalAmountResult').textContent = fmt(amount);
-    document.getElementById('feePercentage').textContent = `${cfg.fee}% + ${cfg.fixed.toFixed(2)} ر.س`;
-    document.getElementById('feeAmount').textContent = fmt(fee);
-    document.getElementById('taxAmount').textContent = fmt(tax);
-    document.getElementById('feeAfterTax').textContent = fmt(feeAfterTax);
-    document.getElementById('netAmount').textContent = fmt(net);
-
-    buildShareLinks();
-  }
-
-  function buildShareLinks(){
-    const amount = document.getElementById('totalAmount').value || '';
-    const cfg = companies[selectedCompany];
-    const base = location.origin + location.pathname;
-    const qs = new URLSearchParams({ amount, company: selectedCompany });
-    const url = base + '?' + qs.toString();
-
-    const text = `حاسبة رسوم ${cfg.label}: قيمة الطلب ${amount} ر.س + ضريبة العمولة 15% (إلزاميًا) — جرّبها: `;
-    const wa = `https://wa.me/?text=${encodeURIComponent(text + url)}`;
-    const x  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-    const tg = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
-
-    const box = document.getElementById('shareLinks');
-    box.innerHTML = '';
-    box.appendChild(shareBtn('📱 واتساب', wa));
-    box.appendChild(shareBtn('𝕏', x));
-    box.appendChild(shareBtn('✈️ تيليجرام', tg));
-    const copy = document.createElement('a'); copy.href='#'; copy.textContent='🔗 نسخ الرابط';
-    copy.addEventListener('click', e => { e.preventDefault(); navigator.clipboard.writeText(url); alert('تم نسخ الرابط'); });
-    box.appendChild(copy);
-  }
-  function shareBtn(label, href){ const a=document.createElement('a'); a.href=href; a.target="_blank"; a.rel="noopener"; a.textContent=label; return a; }
-
-  (function loadFromQS(){
-    const qs = new URLSearchParams(location.search);
-    if (qs.has('company') && companies[qs.get('company')]) selectCompany(qs.get('company')); else selectCompany('tabby');
-    if (qs.has('amount')) document.getElementById('totalAmount').value = qs.get('amount');
-    if (qs.has('amount')) calculate(); else document.getElementById('optTabby').classList.add('active');
-  })();
+})();
 </script>
-<!-- GetButton.io widget -->
+
+<!-- GetButton.io -->
 <script type="text/javascript">
-    (function () {
-        var options = {
-                    whatsapp:"530213113",
-                    call_to_action:"راسلنا",
-                    button_color:"#FF6550",
-                    position:"right",
-                };
-        var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;
-        var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
-        s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
-        var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
-    })();
+(function(){
+  var o={whatsapp:"530213113",call_to_action:"راسلنا",button_color:"#FF6550",position:"right"};
+  var p=document.location.protocol,h="getbutton.io",u=p+"//static."+h;
+  var s=document.createElement('script');s.type="text/javascript";s.async=true;
+  s.src=u+'/widget-send-button/js/init.js';
+  s.onload=function(){WhWidgetSendButton.init(h,p,o)};
+  var x=document.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);
+})();
 </script>
-<!-- /GetButton.io widget -->
+
 </body>
 </html>
